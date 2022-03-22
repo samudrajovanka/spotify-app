@@ -1,0 +1,33 @@
+.card {
+  width: 200px;
+}
+
+.card__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.card__album {
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+.card__artist {
+  color: var(--gray);
+  margin-top: 4px;
+}
+
+.card > .button_wrapper {
+  margin-top: 12px;
+  display: flex;
+  justify-content: end;
+}
+
+.card__button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--green);
+}
