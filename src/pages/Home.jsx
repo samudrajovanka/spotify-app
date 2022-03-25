@@ -6,11 +6,14 @@ export default function Home() {
   return (
     <main className="container">
       <div className="cards">
-        <Card
-          imageUrl={dataSong.album.images[0].url}
-          title={dataSong.name}
-          artist={dataSong.artists[0].name}
-        />
+        {dataSong.map((song) => (
+          <Card
+            key={song.id}
+            imageUrl={song.album.images[0].url}
+            title={song.name}
+            artist={song.artists[0].name}
+          />
+        ))}
       </div>
     </main>
   )
