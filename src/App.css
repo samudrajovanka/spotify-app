@@ -4,20 +4,13 @@
   padding: 0 100px;
 }
 
-.btn {
-  min-height: 44px;
-  min-width: 80px;
-  background-color: var(--green);
-  border: none;
-  padding: 0 16px;
-  cursor: pointer;
-  border-radius: 4px;
-  color: #FFFFFF;
-  transition: background-color 0.2s ease-in-out;
+#home {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.btn:hover {
-  background-color: #0ccc7c;
+.content {
+  margin-top: 40px;
 }
 
 .cards {
@@ -25,4 +18,27 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   column-gap: 20px;
   row-gap: 40px;
+  justify-items: center;
+}
+
+input {
+  min-height: 44px;
+  border: 1px solid var(--gray);
+  border-radius: 30px;
+  padding: 4px 16px;
+  outline: none;
+  transition: border .2s ease-in-out;
+}
+
+input:focus {
+  border: 1px solid #0ccc7c;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
