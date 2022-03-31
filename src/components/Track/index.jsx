@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './index.css';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 
-export default function Card({ imageUrl, title, artist }) {
+export default function Track({ imageUrl, title, artist, toggleSelect }) {
+  const [iseSelected, setIseSelected] = useState(false);
+
+  const handleToggleSelect = () => {
+    setIseSelected(!iseSelected);
+    toggleSelect();
+  }
+
   return (
     <div className="card">
       <div className="card__image">
@@ -17,15 +24,16 @@ export default function Card({ imageUrl, title, artist }) {
         </div>
         
         <div className="card__action">
-          <Button variant="secondary">Select</Button>
+          <Button variant={iseSelected ? 'primary' : 'secondary'} onClick={handleToggleSelect}>{iseSelected ? 'Deselect' : 'Select'}</Button>
         </div>
       </div>
     </div>
   );
 }
 
-Card.propTypes = {
+Track.propTypes = {
   imageUrl: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
+  toggleSelect: PropTypes.func.isRequired,
 }
