@@ -34,13 +34,13 @@ export default function Home() {
   }
 
   const filterSelectedTracks = () => {
-    return tracks.filter(track => selectedTracksUri.includes(track.uri));
+    return tracks.filter((track) => selectedTracksUri.includes(track.uri));
   }
 
   const onSuccessSearch = (searchTracks) => {
     setIsInSearch(true);
     const selectedTracks = filterSelectedTracks();
-    const searchDistincTracks = searchTracks.filter(track => !selectedTracksUri.includes(track.uri));
+    const searchDistincTracks = searchTracks.filter((track) => !selectedTracksUri.includes(track.uri));
 
     setTracks([...selectedTracks, ...searchDistincTracks]);
   }
@@ -58,7 +58,7 @@ export default function Home() {
     const uri = track.uri;
 
     if (selectedTracksUri.includes(uri)) {
-      setSelectedTracksUri(selectedTracksUri.filter(item => item !== uri));
+      setSelectedTracksUri(selectedTracksUri.filter((item) => item !== uri));
     } else {
       setSelectedTracksUri([...selectedTracksUri, uri]);
     }

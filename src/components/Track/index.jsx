@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import Button from '../Button';
 
 export default function Track({ imageUrl, title, artist, toggleSelect }) {
-  const [iseSelected, setIseSelected] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
 
   const handleToggleSelect = () => {
-    setIseSelected(!iseSelected);
+    setIsSelected(!isSelected);
     toggleSelect();
   }
 
@@ -24,7 +24,7 @@ export default function Track({ imageUrl, title, artist, toggleSelect }) {
         </div>
         
         <div className="card__action">
-          <Button variant={iseSelected ? 'primary' : 'secondary'} onClick={handleToggleSelect}>{iseSelected ? 'Deselect' : 'Select'}</Button>
+          <Button variant={isSelected ? 'primary' : 'secondary'} onClick={handleToggleSelect}>{isSelected ? 'Deselect' : 'Select'}</Button>
         </div>
       </div>
     </div>
