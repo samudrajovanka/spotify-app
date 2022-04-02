@@ -22,19 +22,13 @@ code {
 :root {
   --green: #12c57a;
   --gray: #949494;
+  --red: #ff3434;
 }
 
-input {
-  min-height: 44px;
-  border: 1px solid var(--gray);
-  border-radius: 30px;
-  padding: 4px 16px;
-  outline: none;
-  transition: border .2s ease-in-out;
-}
-
-input:focus {
-  border: 1px solid #0ccc7c;
+hr {
+  margin: 40px 0;
+  border: 0;
+  border-top: 1px dashed #bdbdbd;
 }
 
 .center {
@@ -44,6 +38,12 @@ input:focus {
   height: 100vh;
   justify-content: center;
   align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .mt-1 {

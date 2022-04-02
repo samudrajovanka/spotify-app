@@ -3,28 +3,45 @@ import Track from '../components/Track';
 import SearchBar from '../components/SearchBar';
 import config from '../lib/config';
 import Button from '../components/Button';
+import CreatePlaylistForm from '../components/CreatePlaylistForm';
+import { getUserProfile } from '../lib/fetchApi';
+import { toast } from 'react-toastify';
 
 export default function Home() {
   const [accessToken, setAccessToken] = useState('');
   const [isAuthorize, setIsAuthorize] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [selectedTracksUri, setSelectedTracksUri] = useState([]);
+  const [selectedTracks, setSelectedTracks] = useState([]);
   const [isInSearch, setIsInSearch] = useState(false);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    const accessToken = new URLSearchParams(window.location.hash).get('#access_token');
+    const accessTokenParams = new URLSearchParams(window.location.hash).get('#access_token');
 
-    setAccessToken(accessToken);
-    setIsAuthorize(accessToken !== null);
+    if (accessTokenParams !== null) {
+      setAccessToken(accessTokenParams);
+      setIsAuthorize(accessTokenParams !== null);
+
+      const setUserProfile = async () => {
+        try {
+          const response = await getUserProfile(accessTokenParams);
+
+          setUser(response);
+        } catch (e) {
+          toast.error(e);
+        }
+      }
+
+      setUserProfile();
+    }
   }, []);
 
   useEffect(() => {
     if (!isInSearch) {
-      const selectedTracks = filterSelectedTracks();
-
       setTracks(selectedTracks);
     }
-  }, [selectedTracksUri]);
+  }, [selectedTracksUri, selectedTracks, isInSearch]);
 
   const getSpotifyLinkAuthorize = () => {
     const state = Date.now().toString();
@@ -33,34 +50,29 @@ export default function Home() {
     return `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=http://localhost:3000&state=${state}&scope=${config.SPOTIFY_SCOPE}`;
   }
 
-  const filterSelectedTracks = () => {
-    return tracks.filter((track) => selectedTracksUri.includes(track.uri));
-  }
-
   const onSuccessSearch = (searchTracks) => {
     setIsInSearch(true);
-    const selectedTracks = filterSelectedTracks();
-    const searchDistincTracks = searchTracks.filter((track) => !selectedTracksUri.includes(track.uri));
 
-    setTracks([...selectedTracks, ...searchDistincTracks]);
+    const selectedSearchTracks = searchTracks.filter((track) => selectedTracksUri.includes(track.uri));
+
+    setTracks([...new Set([...selectedSearchTracks, ...searchTracks])])
   }
 
 
   const clearSearch = () => {
-    const selectedTracks = filterSelectedTracks();
-    
     setTracks(selectedTracks);
     setIsInSearch(false);
   }
-
 
   const toggleSelect = (track) => {
     const uri = track.uri;
 
     if (selectedTracksUri.includes(uri)) {
       setSelectedTracksUri(selectedTracksUri.filter((item) => item !== uri));
+      setSelectedTracks(selectedTracks.filter((item) => item.uri !== uri));
     } else {
       setSelectedTracksUri([...selectedTracksUri, uri]);
+      setSelectedTracks([...selectedTracks, track]);
     }
   }
 
@@ -75,9 +87,17 @@ export default function Home() {
 
       {isAuthorize && (
         <main className="container" id="home">
+          <CreatePlaylistForm
+            accessToken={accessToken}
+            userId={user.id}
+            uriTracks={selectedTracksUri}
+          />
+
+          <hr />
+
           <SearchBar
             accessToken={accessToken}
-            onSuccess={(tracks) => onSuccessSearch(tracks)}
+            onSuccess={onSuccessSearch}
             onClearSearch={clearSearch}
           />
 
@@ -93,6 +113,7 @@ export default function Home() {
                   imageUrl={track.album.images[0].url}
                   title={track.name}
                   artist={track.artists[0].name}
+                  select={selectedTracksUri.includes(track.uri)}
                   toggleSelect={() => toggleSelect(track)}
                 />
               ))}
