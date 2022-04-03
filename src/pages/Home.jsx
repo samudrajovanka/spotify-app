@@ -21,7 +21,7 @@ export default function Home() {
 
     if (accessTokenParams !== null) {
       setAccessToken(accessTokenParams);
-      setIsAuthorize(accessTokenParams !== null);
+      setIsAuthorize(true);
 
       const setUserProfile = async () => {
         try {
@@ -57,7 +57,6 @@ export default function Home() {
 
     setTracks([...new Set([...selectedSearchTracks, ...searchTracks])])
   }
-
 
   const clearSearch = () => {
     setTracks(selectedTracks);

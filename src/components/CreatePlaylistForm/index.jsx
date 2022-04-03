@@ -38,7 +38,7 @@ export default function CreatePlaylistForm({ accessToken, userId, uriTracks }) {
     if (form.description.length > 100) {
       setErrorForm({
         ...errorForm,
-        description: 'Description must be at least 10 characters long'
+        description: 'Description must be less than 100 characters long'
       });
       isValid = false;
     }
@@ -46,24 +46,27 @@ export default function CreatePlaylistForm({ accessToken, userId, uriTracks }) {
     return isValid;
   }
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      try {
-        const responseCreatePlaylist = await createPlaylist(accessToken, userId, {
-          name: form.title,
-          description: form.description,
-        });
+      if (uriTracks.length > 0) {
+        try {
+          const responseCreatePlaylist = await createPlaylist(accessToken, userId, {
+            name: form.title,
+            description: form.description,
+          });
 
-        await addTracksToPlaylist(accessToken, responseCreatePlaylist.id, uriTracks);
+          await addTracksToPlaylist(accessToken, responseCreatePlaylist.id, uriTracks);
 
-        toast.success('Playlist created successfully');
+          toast.success('Playlist created successfully');
 
-        setForm({ title: '', description: '' });
-      } catch (error) {
-        toast.error(error);
+          setForm({ title: '', description: '' });
+        } catch (error) {
+          toast.error(error);
+        }
+      } else {
+        toast.error('Please select at least one track');
       }
     }
   }

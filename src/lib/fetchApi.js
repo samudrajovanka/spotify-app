@@ -33,7 +33,7 @@ export const createPlaylist = async (accessToken, userId, { name, description })
     description,
     public: false,
     collaborative: false,
-  })
+  });
   
   const requestOptions = {
     headers: {
