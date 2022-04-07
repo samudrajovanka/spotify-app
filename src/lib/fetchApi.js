@@ -10,7 +10,6 @@ export const searchTrack = async (query, accessToken) => {
   };
 
   const response = await axios.get(`${config.SPOTIFY_BASE_URL}/search?type=track&q=${query}`, requestOptions);
-
   return response.data;
 }
 

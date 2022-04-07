@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { addTracksToPlaylist, createPlaylist } from '../../lib/fetchApi';
 import Button from '../Button';
@@ -7,10 +7,12 @@ import Input from '../Input';
 import InputGroup from '../InputGroup';
 import './index.css';
 import PropTypes from 'prop-types';
+import { logout } from '../../slice/authSlice';
 
 export default function CreatePlaylistForm({ uriTracks }) {
   const accessToken = useSelector((state) => state.auth.accessToken);
   const userId = useSelector((state) => state.auth.user.id);
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({
     title: '',
@@ -68,7 +70,11 @@ export default function CreatePlaylistForm({ uriTracks }) {
 
           setForm({ title: '', description: '' });
         } catch (error) {
-          toast.error(error);
+          if (error.response.status === 401) {
+            dispatch(logout());
+          } else {
+            toast.error(error.message);
+          }
         }
       } else {
         toast.error('Please select at least one track');
@@ -119,4 +125,4 @@ export default function CreatePlaylistForm({ uriTracks }) {
 
 CreatePlaylistForm.propTypes = {
   uriTracks: PropTypes.array.isRequired,
-}
+};

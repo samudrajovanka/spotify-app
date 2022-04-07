@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Navbar from '../Navbar';
 
-export default function InputGroup({ children }) {
+export default function Layout({ children }) {
   return (
-    <div className="input-group">
+    <div>
+      <Navbar />
+
       {children}
     </div>
   )
 }
 
-InputGroup.propTypes = {
+Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
