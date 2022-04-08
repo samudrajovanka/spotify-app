@@ -24,4 +24,4 @@ export default function GuardRoute({ children, type, ...props }) {
 GuardRoute.propTypes = {
   children: PropTypes.node.isRequired,
   type: PropTypes.oneOf(['guest', 'private']).isRequired,
-}
+};

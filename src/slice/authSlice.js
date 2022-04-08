@@ -13,7 +13,7 @@ export const authSlice = createSlice({
       state.isAuthorized = true;
       state.user = action.payload.user;
 
-      localStorage.setItem('accessToken', action.payload.accessToken);
+      localStorage.setItem('accessToken', state.accessToken);
       localStorage.setItem('expiredDate', action.payload.expiredDate);
       localStorage.setItem('user', JSON.stringify(state.user));
     },
@@ -24,6 +24,7 @@ export const authSlice = createSlice({
 
       localStorage.removeItem('accessToken');
       localStorage.removeItem('expiredDate');
+      localStorage.removeItem('user');
     },
   }
 });

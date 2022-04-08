@@ -47,7 +47,7 @@ export default function SearchBar({ onSuccess, onClearSearch }) {
       <form className="form-search" onSubmit={handleSubmit}>
         <Input
           type="text"
-          placeholder="Search..."
+          placeholder="Search track..."
           className="form-search__input"
           required
           value={text}
@@ -66,4 +66,4 @@ export default function SearchBar({ onSuccess, onClearSearch }) {
 SearchBar.propTypes = {
   onSuccess: PropTypes.func.isRequired,
   onClearSearch: PropTypes.func.isRequired,
-}
+};
