@@ -26,7 +26,7 @@ function App() {
           accessToken,
           user,
           expiredDate,
-          }));
+        }));
       }
     }
   }, [accessTokenState, dispatch, location.pathname]);

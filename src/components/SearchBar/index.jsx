@@ -7,6 +7,7 @@ import { searchTrack } from '../../lib/fetchApi';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../slice/authSlice';
+import { FaSearch } from "react-icons/fa";
 
 export default function SearchBar({ onSuccess, onClearSearch }) {
   const accessToken = useSelector((state) => state.auth.accessToken);
@@ -53,7 +54,7 @@ export default function SearchBar({ onSuccess, onClearSearch }) {
           value={text}
           onChange={handleInput}
         />
-        <Button type="submit">Search</Button>
+        <Button type="submit"><FaSearch /></Button>
       </form>
 
       {!isClear && (
