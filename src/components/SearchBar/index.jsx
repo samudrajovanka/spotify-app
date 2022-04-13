@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '../Button';
-import './index.css';
+import './index.scss';
 import PropTypes from 'prop-types';
 import Input from '../Input';
 import { searchTrack } from '../../lib/fetchApi';

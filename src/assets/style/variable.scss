@@ -1,10 +1,15 @@
 :root {
+  /* color */
   --green                 :#12c57a;
   --gray                  :#949494;
   --red                   :#ff3434;
 
   --shadow                : 7px 7px 30px -8px rgba(0, 0, 0, .15);
 
+  /* card */
   --rounded-card          : 10px;
   --shadow-card           : var(--shadow);
+
+  /* button */
+  --color-hover-button    : #24cf88;
 }

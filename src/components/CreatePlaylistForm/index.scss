@@ -1,20 +1,21 @@
 .form-playlist {
   width: 100%;
   margin-top: 24px;
+
+  &__action {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
-.form-playlist__action {
-  display: flex;
-  justify-content: flex-end;
-}
 
 @media screen and (min-width: 500px) {
   .create-playlist-form {
     display: flex;
     justify-content: center;
-  }
-
-  .form-playlist {
-    width: 400px;
+  
+    .form-playlist {
+      width: 400px;
+    }
   }
 }

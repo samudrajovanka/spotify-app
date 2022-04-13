@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../../slice/authSlice';
 import Button from '../Button';
 import Logo from '../Logo';
-import './index.css';
+import './index.scss';
 
 export default function Navbar() {
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import './index.scss';
 import PropTypes from 'prop-types';
 
 function ElementInput({ type, ...props }) {

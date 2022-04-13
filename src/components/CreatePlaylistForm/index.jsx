@@ -5,7 +5,7 @@ import { addTracksToPlaylist, createPlaylist } from '../../lib/fetchApi';
 import Button from '../Button';
 import Input from '../Input';
 import InputGroup from '../InputGroup';
-import './index.css';
+import './index.scss';
 import PropTypes from 'prop-types';
 import { logout } from '../../slice/authSlice';
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './index.css';
+import './index.scss';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 
@@ -12,16 +12,16 @@ export default function Track({ imageUrl, title, artist, select, toggleSelect })
   }
 
   return (
-    <div className="card">
-      <div className="card__image">
+    <div className="track">
+      <div className="track__image">
         <img src={imageUrl} alt={title} />
       </div>
 
-      <div className="card__data">
-        <h3 className="card__title truncate">{title}</h3>
-        <p className="card__artist truncate">{artist}</p>
+      <div className="track__data">
+        <h3 className="track__title truncate">{title}</h3>
+        <p className="track__artist truncate">{artist}</p>
         
-        <div className="card__action">
+        <div className="track__action">
           <Button
             variant={isSelected ? 'primary' : 'secondary'}
             onClick={handleToggleSelect}
