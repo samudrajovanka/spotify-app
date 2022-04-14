@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { addTracksToPlaylist, createPlaylist } from '../../lib/fetchApi';
-import Button from '../Button';
-import Input from '../Input';
-import InputGroup from '../InputGroup';
-import './index.scss';
 import PropTypes from 'prop-types';
 import { logout } from '../../slice/authSlice';
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  Textarea,
+  Button,
+  HStack,
+  VStack,
+  Heading
+} from '@chakra-ui/react';
 
 export default function CreatePlaylistForm({ uriTracks }) {
   const accessToken = useSelector((state) => state.auth.accessToken);
@@ -83,43 +91,51 @@ export default function CreatePlaylistForm({ uriTracks }) {
   }
 
   return (
-    <div className="create-playlist-form">
-      <div>
-        <h2>Create Playlist</h2>
+    <VStack justify="center">
+      <Box>
+        <Heading as="h3" size="lg">Create Playlist</Heading>
+      </Box>
 
-        <form className="form form-playlist" onSubmit={handleSubmit}>
-          <InputGroup>
-            <Input
-              label="Title"
-              placeholder="Title of playlist"
-              value={form.title}
-              id="title-playlist"
-              name="title"
-              onChange={handleChange}
-              error={errorForm.title}
-              required
-            />
-          </InputGroup>
-          <InputGroup>
-            <Input
-              type='textarea'
-              label="Description"
-              placeholder="Description of playlist"
-              value={form.description}
-              id="description-playlist"
-              name="description"
-              onChange={handleChange}
-              required
-              error={errorForm.description}
-            />
-          </InputGroup>
+      <Box
+        as="form"
+        onSubmit={handleSubmit}
+        className="form"
+        mt={6}
+        width={{ base: '100%', sm: '400px' }}
+      >
+        <FormControl isInvalid={errorForm.title} isRequired>
+          <FormLabel htmlFor="title-playlist">Title</FormLabel>
+          <Input
+            id="title-playlist"
+            name="title"
+            onChange={handleChange}
+            value={form.title}
+            placeholder="Title of playlist"
+          />
+          {errorForm.title && (
+            <FormErrorMessage>{errorForm.title}</FormErrorMessage>
+          )}
+        </FormControl>
 
-          <div className="form-playlist__action">
-            <Button type="submit">Create</Button>
-          </div>
-        </form>
-      </div>
-    </div>
+        <FormControl isInvalid={errorForm.description} isRequired>
+          <FormLabel htmlFor="description-playlist">Description</FormLabel>
+          <Textarea
+            id="description-playlist"
+            placeholder="Description of playlist"
+            value={form.description}
+            name="description"
+            onChange={handleChange}
+          />
+          {errorForm.description && (
+            <FormErrorMessage>{errorForm.description}</FormErrorMessage>
+          )}
+        </FormControl>
+
+        <HStack justify="flex-end">
+          <Button type="submit">Create</Button>  
+        </HStack>
+      </Box>
+    </VStack>
   )
 }
 

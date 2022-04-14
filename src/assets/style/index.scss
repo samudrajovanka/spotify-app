@@ -1,12 +1,7 @@
-@import url('variable.scss');
-
 * {
   box-sizing: border-box;
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
-
 
 body, p, h1, h2, h3, h4, h5, h6 {
   margin: 0;
@@ -28,6 +23,10 @@ hr {
   border-top: 1px dashed #bdbdbd;
 }
 
+a {
+  text-decoration: none;
+}
+
 .center {
   display: flex;
   flex-direction: column;
@@ -43,35 +42,10 @@ hr {
   gap: 16px;
 }
 
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 16px;
-}
-
-.truncate {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-#home {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.content {
-  margin-top: 40px;
-}
-
-.tracks {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
 }
 
 @media screen and (min-width: 640px) {

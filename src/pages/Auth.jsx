@@ -2,11 +2,11 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Button from '../components/Button';
 import config from '../lib/config';
 import { useDocumentTitle } from '../lib/customHooks';
 import { getUserProfile } from '../lib/fetchApi';
 import { login } from '../slice/authSlice';
+import { Box, Button, Link, Text } from '@chakra-ui/react'
 
 export default function Auth() {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export default function Auth() {
     }
   }, [setLogin]);
 
-  const getSpotifyLinkAuthorize = () => {
+  const buildSpotifyLinkAuthorize = () => {
     const state = Date.now().toString();
     const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
 
@@ -51,9 +51,15 @@ export default function Auth() {
   }
 
   return (
-    <main className="center">
-      <p>Login for next step...</p>
-      <Button href={getSpotifyLinkAuthorize()} external>Authorize</Button>
+    <main>
+      <Box className="center" gap={2}>
+        <Text>Login for next step...</Text>
+
+        <Link href={buildSpotifyLinkAuthorize()} _hover={{ textDecoration: 'none' }}>
+          <Button>Authorize</Button>
+        </Link>
+      </Box>
+      
     </main>
   )
 }

@@ -1,10 +1,10 @@
+import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
-import './index.scss';
 
 export default function Logo() {
   return (
-    <div className="logo">
-      <p>Spotipy.</p>
-    </div>
+    <Box>
+      <Text fontWeight="bold" color="white">Spotipy.</Text>
+    </Box>
   )
 }

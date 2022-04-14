@@ -1,22 +1,21 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../slice/authSlice';
-import Button from '../Button';
 import Logo from '../Logo';
-import './index.scss';
+import { Box, HStack, Button } from '@chakra-ui/react';
 
 export default function Navbar() {
   const dispatch = useDispatch();
 
   return (
-    <nav className="navbar">
-      <div className="container navbar__nav">
+    <Box as="nav" bg="primary.500" py={3} pos="sticky" zIndex={9999} top={0}>
+      <HStack justify="space-between" className="container">
         <Logo />
 
-        <div className="navbar__menu">
-          <Button onClick={() => dispatch(logout())}>Logout</Button>
-        </div>
-      </div>
-    </nav>
+        <Box>
+          <Button colorScheme="primary" onClick={() => dispatch(logout())}>Logout</Button>
+        </Box>
+      </HStack>
+    </Box>
   )
 }
