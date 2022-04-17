@@ -5,13 +5,14 @@ import CreatePlaylistForm from '../components/CreatePlaylistForm';
 import { useDocumentTitle } from '../lib/customHooks';
 import Layout from '../components/Layout';
 import { Box, Divider, Grid, Text } from '@chakra-ui/react';
+import { Track as ITrack } from '../types/tracks';
 
-type TOnSuccessSearch = (searchTracks: any[], query: string) => void;
+type TOnSuccessSearch = (searchTracks: ITrack[], query: string) => void;
 
 const CreatePlaylist: React.FC = () => {
-  const [tracks, setTracks] = useState<any[]>([]);
+  const [tracks, setTracks] = useState<ITrack[]>([]);
   const [selectedTracksUri, setSelectedTracksUri] = useState<string[]>([]);
-  const [selectedTracks, setSelectedTracks] = useState<any[]>([]);
+  const [selectedTracks, setSelectedTracks] = useState<ITrack[]>([]);
   const [isInSearch, setIsInSearch] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('No tracks');
   useDocumentTitle('Create Playlist - Spotipy');
@@ -25,10 +26,10 @@ const CreatePlaylist: React.FC = () => {
   const onSuccessSearch: TOnSuccessSearch = (searchTracks, query) => {
     setIsInSearch(true);
 
-    const selectedSearchTracks = searchTracks.filter((track) => selectedTracksUri.includes(track.uri));
+    const selectedSearchTracks: ITrack[] = searchTracks.filter((track: ITrack) => selectedTracksUri.includes(track.uri));
 
-    setTracks((prevState: any[]): any[] => {
-      const _tracks = [...new Set([...selectedSearchTracks, ...searchTracks])];
+    setTracks((prevState: ITrack[]): ITrack[] => {
+      const _tracks: ITrack[] = [...new Set([...selectedSearchTracks, ...searchTracks])];
 
       if (_tracks.length === 0) {
         setMessage(`No tracks found with query "${query}"`);
@@ -46,12 +47,12 @@ const CreatePlaylist: React.FC = () => {
     setIsInSearch(false);
   }
 
-  const toggleSelect: (track: any) => void = (track) => {
-    const uri = track.uri;
+  const toggleSelect: (track: ITrack) => void = (track) => {
+    const uri: string = track.uri;
 
     if (selectedTracksUri.includes(uri)) {
-      setSelectedTracksUri(selectedTracksUri.filter((item: any) => item !== uri));
-      setSelectedTracks(selectedTracks.filter((item: any) => item.uri !== uri));
+      setSelectedTracksUri(selectedTracksUri.filter((item: string) => item !== uri));
+      setSelectedTracks(selectedTracks.filter((item: ITrack) => item.uri !== uri));
     } else {
       setSelectedTracksUri([...selectedTracksUri, uri]);
       setSelectedTracks([...selectedTracks, track]);

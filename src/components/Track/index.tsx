@@ -39,11 +39,15 @@ const Track: React.FC<IProps> = ({ imageUrl, title, artist, select, toggleSelect
         boxShadow: '0px 7px 15px -7px rgba(0, 0, 0, 0.1)',
       }}
     >
-      <AspectRatio w={{ base: '35%', sm: '100%' }} ratio={1} overflow="hidden">
+      <AspectRatio
+        w={{ base: '35%', sm: '100%' }}
+        ratio={1}
+        overflow="hidden"
+        borderRadius={{ sm: 10 }}
+      >
         <Image
           src={imageUrl}
           alt={title}
-          borderRadius={{ sm: 10 }}
           transform="scale(1.1)"
           _groupHover={{ transform: 'scale(1)' }}
           transition="transform .3s ease-in-out" />

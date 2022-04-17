@@ -1,11 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { logout } from '../../slice/authSlice';
 import Logo from '../Logo';
 import { Box, HStack, Button } from '@chakra-ui/react';
+import { useAppDispatch } from '../../store';
 
 const Navbar: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <Box as="nav" bg="primary.500" py={3} pos="sticky" zIndex={9999} top={0}>

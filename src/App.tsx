@@ -4,14 +4,14 @@ import { useLocation, Switch, Route } from 'react-router-dom';
 import Auth from './pages/Auth';
 import GuardRoute from './components/GuardRoute';
 import NotFound from './pages/NotFound';
-import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from './slice/authSlice';
-import { TRootState } from './store';
+import { useAppDispatch, useAppSelector } from './store';
+import { User } from './types/user';
 
 const App: React.FC = () => {
   const { pathname }: { pathname: string } = useLocation();
-  const dispatch = useDispatch();
-  const accessTokenState: string = useSelector((state: TRootState) => state.auth.accessToken);
+  const dispatch = useAppDispatch();
+  const accessTokenState: string = useAppSelector((state) => state.auth.accessToken);
 
   useEffect(() => {
     const accessToken: string | null = localStorage.getItem('accessToken');
@@ -22,7 +22,7 @@ const App: React.FC = () => {
       if (+(expiredDate as string) < +new Date()) {
         dispatch((logout()));
       } else if (!accessTokenState) {
-        const user: string = JSON.parse(localStorage.getItem('user') || "");
+        const user: User | string = JSON.parse(localStorage.getItem('user') || "");
         dispatch(login({
           accessToken,
           user,

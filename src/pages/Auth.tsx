@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import config from '../lib/config';
@@ -7,15 +6,17 @@ import { useDocumentTitle } from '../lib/customHooks';
 import { getUserProfile } from '../lib/fetchApi';
 import { login } from '../slice/authSlice';
 import { Box, Button, Link, Text } from '@chakra-ui/react'
+import { User } from '../types/user';
+import { useAppDispatch } from '../store';
 
 const Auth : React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
   useDocumentTitle('Auth - Spotipy');
 
   const setLogin = useCallback(async (accessToken, expiresIn) => {
     try {
-      const responseUser = await getUserProfile(accessToken);
+      const responseUser: User = await getUserProfile(accessToken);
 
       dispatch(login({
         accessToken,

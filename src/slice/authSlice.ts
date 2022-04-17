@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { User } from '../types/user';
 
 interface IInitialState {
   accessToken: string;
   isAuthorized: boolean;
-  user: any;
+  user: User | null;
 }
 
 const initialState: IInitialState = {
   accessToken: '',
   isAuthorized: false,
-  user: {},
+  user: null,
 }
 
 export const authSlice = createSlice({
@@ -28,7 +29,7 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.accessToken = '';
       state.isAuthorized = false;
-      state.user = {};
+      state.user = null;
 
       localStorage.removeItem('accessToken');
       localStorage.removeItem('expiredDate');
