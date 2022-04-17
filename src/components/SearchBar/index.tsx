@@ -1,41 +1,49 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { searchTrack } from '../../lib/fetchApi';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../slice/authSlice';
 import { FaSearch } from "react-icons/fa";
 import { Box, Button, Flex, Input } from '@chakra-ui/react';
+import { TRootState } from '../../store';
+import axios from 'axios';
 
-export default function SearchBar({ onSuccess, onClearSearch }) {
-  const accessToken = useSelector((state) => state.auth.accessToken);
-  const [text, setText] = useState('');
-  const [isClear, setIsClear] = useState(true);
+interface IProps {
+  onSuccess: (tracks: any[], text: string) => void;
+  onClearSearch: () => void;
+}
+
+const SearchBar: React.FC<IProps> = ({ onSuccess, onClearSearch }) => {
+  const accessToken: string = useSelector((state: TRootState) => state.auth.accessToken);
+  const [text, setText] = useState<string>('');
+  const [isClear, setIsClear] = useState<boolean>(true);
   const dispatch = useDispatch();
 
-  const handleInput = (e) => {
+  const handleInput: ChangeEventHandler<HTMLInputElement> = (e) => {
     setText(e.target.value);
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit: FormEventHandler<HTMLDivElement> & FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await searchTrack(text, accessToken);
+      const response: any = await searchTrack(text, accessToken);
 
       const tracks = response.tracks.items;
       onSuccess(tracks, text);
       setIsClear(false);
     } catch (error) {
-      if (error.response.status === 401) {
-        dispatch(logout());
-      } else {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          dispatch(logout());
+        }
+      } else if (error instanceof Error) {
         toast.error(error.message);
       }
     }
   }
 
-  const handleClear = () => {
+  const handleClear: () => void = () => {
     onClearSearch();
     setText('');
     setIsClear(true);
@@ -60,7 +68,4 @@ export default function SearchBar({ onSuccess, onClearSearch }) {
   )
 }
 
-SearchBar.propTypes = {
-  onSuccess: PropTypes.func.isRequired,
-  onClearSearch: PropTypes.func.isRequired,
-};
+export default SearchBar;

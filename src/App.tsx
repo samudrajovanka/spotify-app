@@ -1,27 +1,28 @@
+import React, { useEffect } from 'react';
 import CreatePlaylist from './pages/CreatePlaylist';
 import { useLocation, Switch, Route } from 'react-router-dom';
 import Auth from './pages/Auth';
 import GuardRoute from './components/GuardRoute';
 import NotFound from './pages/NotFound';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from './slice/authSlice';
+import { TRootState } from './store';
 
-function App() {
-  const location = useLocation();
+const App: React.FC = () => {
+  const { pathname }: { pathname: string } = useLocation();
   const dispatch = useDispatch();
-  const accessTokenState = useSelector((state) => state.auth.accessToken);
+  const accessTokenState: string = useSelector((state: TRootState) => state.auth.accessToken);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken: string | null = localStorage.getItem('accessToken');
 
     if (accessToken) {
-      const expiredDate = localStorage.getItem('expiredDate');
+      const expiredDate: string | null = localStorage.getItem('expiredDate');
 
-      if (expiredDate < +new Date()) {
-        dispatch(logout());
+      if (+(expiredDate as string) < +new Date()) {
+        dispatch((logout()));
       } else if (!accessTokenState) {
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user: string = JSON.parse(localStorage.getItem('user') || "");
         dispatch(login({
           accessToken,
           user,
@@ -29,7 +30,7 @@ function App() {
         }));
       }
     }
-  }, [accessTokenState, dispatch, location.pathname]);
+  }, [accessTokenState, dispatch, pathname]);
 
   return (
     <Switch>

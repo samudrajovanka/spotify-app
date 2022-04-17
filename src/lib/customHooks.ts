@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
-const useDocumentTitle = title => {
-  const [documentTitle, setDocumentTitle] = useState(title);
+type TUseDocumentTitle = (title: string) => [string, (title: string) => void];
+
+const useDocumentTitle: TUseDocumentTitle = (title) => {
+  const [documentTitle, setDocumentTitle] = useState<string>(title);
   
   useEffect(() => {
     document.title = documentTitle; 

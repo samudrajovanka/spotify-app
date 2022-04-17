@@ -6,12 +6,14 @@ import { useDocumentTitle } from '../lib/customHooks';
 import Layout from '../components/Layout';
 import { Box, Divider, Grid, Text } from '@chakra-ui/react';
 
-export default function Home() {
-  const [tracks, setTracks] = useState([]);
-  const [selectedTracksUri, setSelectedTracksUri] = useState([]);
-  const [selectedTracks, setSelectedTracks] = useState([]);
-  const [isInSearch, setIsInSearch] = useState(false);
-  const [message, setMessage] = useState('No tracks');
+type TOnSuccessSearch = (searchTracks: any[], query: string) => void;
+
+const CreatePlaylist: React.FC = () => {
+  const [tracks, setTracks] = useState<any[]>([]);
+  const [selectedTracksUri, setSelectedTracksUri] = useState<string[]>([]);
+  const [selectedTracks, setSelectedTracks] = useState<any[]>([]);
+  const [isInSearch, setIsInSearch] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('No tracks');
   useDocumentTitle('Create Playlist - Spotipy');
 
   useEffect(() => {
@@ -20,12 +22,12 @@ export default function Home() {
     }
   }, [selectedTracksUri, selectedTracks, isInSearch]);
 
-  const onSuccessSearch = (searchTracks, query) => {
+  const onSuccessSearch: TOnSuccessSearch = (searchTracks, query) => {
     setIsInSearch(true);
 
     const selectedSearchTracks = searchTracks.filter((track) => selectedTracksUri.includes(track.uri));
 
-    setTracks(() => {
+    setTracks((prevState: any[]): any[] => {
       const _tracks = [...new Set([...selectedSearchTracks, ...searchTracks])];
 
       if (_tracks.length === 0) {
@@ -38,18 +40,18 @@ export default function Home() {
     });
   }
 
-  const clearSearch = () => {
+  const clearSearch: () => void = () => {
     setTracks(selectedTracks);
     setMessage('No tracks');
     setIsInSearch(false);
   }
 
-  const toggleSelect = (track) => {
+  const toggleSelect: (track: any) => void = (track) => {
     const uri = track.uri;
 
     if (selectedTracksUri.includes(uri)) {
-      setSelectedTracksUri(selectedTracksUri.filter((item) => item !== uri));
-      setSelectedTracks(selectedTracks.filter((item) => item.uri !== uri));
+      setSelectedTracksUri(selectedTracksUri.filter((item: any) => item !== uri));
+      setSelectedTracks(selectedTracks.filter((item: any) => item.uri !== uri));
     } else {
       setSelectedTracksUri([...selectedTracksUri, uri]);
       setSelectedTracks([...selectedTracks, track]);
@@ -93,3 +95,5 @@ export default function Home() {
     </Layout>
   );
 }
+
+export default CreatePlaylist;

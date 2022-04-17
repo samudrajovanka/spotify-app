@@ -4,7 +4,7 @@ import { logout } from '../../slice/authSlice';
 import Logo from '../Logo';
 import { Box, HStack, Button } from '@chakra-ui/react';
 
-export default function Navbar() {
+const Navbar: React.FC = () => {
   const dispatch = useDispatch();
 
   return (
@@ -19,3 +19,5 @@ export default function Navbar() {
     </Box>
   )
 }
+
+export default Navbar;

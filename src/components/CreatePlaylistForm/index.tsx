@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { addTracksToPlaylist, createPlaylist } from '../../lib/fetchApi';
-import PropTypes from 'prop-types';
 import { logout } from '../../slice/authSlice';
 import {
   Box,
@@ -16,31 +15,45 @@ import {
   VStack,
   Heading
 } from '@chakra-ui/react';
+import store from '../../store';
+import axios from 'axios';
 
-export default function CreatePlaylistForm({ uriTracks }) {
-  const accessToken = useSelector((state) => state.auth.accessToken);
-  const userId = useSelector((state) => state.auth.user.id);
+interface IProps {
+  uriTracks: string[];
+}
+
+interface IForm {
+  title: string;
+  description: string;
+}
+
+type TValidateForm = () => boolean;
+type TRootState = ReturnType<typeof store.getState>;
+
+const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
+  const accessToken: string = useSelector((state: TRootState) => state.auth.accessToken);
+  const userId: string = useSelector((state: TRootState) => state.auth.user?.id);
   const dispatch = useDispatch();
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<IForm>({
     title: '',
     description: '',
   });
 
-  const [errorForm, setErrorForm] = useState({
+  const [errorForm, setErrorForm] = useState<IForm>({
     title: '',
     description: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> & ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     const { name, value } = e.target;
 
     setForm({ ...form, [name]: value });
     setErrorForm({ ...errorForm, [name]: '' });
   }
 
-  const validateForm = () => {
-    let isValid = true;
+  const validateForm: TValidateForm = () => {
+    let isValid: boolean = true;
 
     if (form.title.length < 10) {
       setErrorForm({
@@ -61,7 +74,7 @@ export default function CreatePlaylistForm({ uriTracks }) {
     return isValid;
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit: FormEventHandler<HTMLDivElement> & FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
@@ -74,13 +87,15 @@ export default function CreatePlaylistForm({ uriTracks }) {
 
           await addTracksToPlaylist(accessToken, responseCreatePlaylist.id, uriTracks);
 
-          toast.success('Playlist created successfully');
+          toast.success(' created successfully');
 
           setForm({ title: '', description: '' });
         } catch (error) {
-          if (error.response.status === 401) {
-            dispatch(logout());
-          } else {
+          if (axios.isAxiosError(error)) {
+            if (error.response?.status === 401) {
+              dispatch(logout());
+            }
+          } else if (error instanceof Error) {
             toast.error(error.message);
           }
         }
@@ -103,7 +118,7 @@ export default function CreatePlaylistForm({ uriTracks }) {
         mt={6}
         width={{ base: '100%', sm: '400px' }}
       >
-        <FormControl isInvalid={errorForm.title} isRequired>
+        <FormControl isInvalid={errorForm.title.length > 0} isRequired>
           <FormLabel htmlFor="title-playlist">Title</FormLabel>
           <Input
             id="title-playlist"
@@ -117,7 +132,7 @@ export default function CreatePlaylistForm({ uriTracks }) {
           )}
         </FormControl>
 
-        <FormControl isInvalid={errorForm.description} isRequired>
+        <FormControl isInvalid={errorForm.description.length > 0} isRequired>
           <FormLabel htmlFor="description-playlist">Description</FormLabel>
           <Textarea
             id="description-playlist"
@@ -139,6 +154,4 @@ export default function CreatePlaylistForm({ uriTracks }) {
   )
 }
 
-CreatePlaylistForm.propTypes = {
-  uriTracks: PropTypes.array.isRequired,
-};
+export default CreatePlaylistForm;

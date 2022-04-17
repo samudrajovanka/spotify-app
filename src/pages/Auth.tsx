@@ -8,7 +8,7 @@ import { getUserProfile } from '../lib/fetchApi';
 import { login } from '../slice/authSlice';
 import { Box, Button, Link, Text } from '@chakra-ui/react'
 
-export default function Auth() {
+const Auth : React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   useDocumentTitle('Auth - Spotipy');
@@ -25,22 +25,24 @@ export default function Auth() {
 
       history.push('/create-playlist');
     } catch (error) {
-      toast.error(error.message);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     }
   }, [dispatch, history]);
 
   useEffect(() => {
-    const accessTokenParams = new URLSearchParams(window.location.hash).get('#access_token');
-    const expiresIn = new URLSearchParams(window.location.hash).get('expires_in');
+    const accessTokenParams: string | null = new URLSearchParams(window.location.hash).get('#access_token');
+    const expiresIn: string | null = new URLSearchParams(window.location.hash).get('expires_in');
 
     if (accessTokenParams !== null) {
       setLogin(accessTokenParams, expiresIn);
     }
   }, [setLogin]);
 
-  const buildSpotifyLinkAuthorize = () => {
-    const state = Date.now().toString();
-    const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+  const buildSpotifyLinkAuthorize: () => string = () => {
+    const state: string = Date.now().toString();
+    const clientId: string | undefined = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
 
     return 'https://accounts.spotify.com/authorize?' +
       `client_id=${clientId}` +
@@ -63,3 +65,5 @@ export default function Auth() {
     </main>
   )
 }
+
+export default Auth;
