@@ -1,7 +1,7 @@
 import { Box, Button, Text } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDocumentTitle } from '../lib/customHooks';
+import { useDocumentTitle } from '../../lib/customHooks';
 
 const NotFound: React.FC = () => {
   useDocumentTitle('Not Found - Spotipy');

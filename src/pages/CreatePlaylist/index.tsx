@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Track from '../components/Track';
-import SearchBar from '../components/SearchBar';
-import CreatePlaylistForm from '../components/CreatePlaylistForm';
-import { useDocumentTitle } from '../lib/customHooks';
-import Layout from '../components/Layout';
+import Track from '../../components/Track';
+import SearchBar from '../../components/SearchBar';
+import CreatePlaylistForm from '../../components/CreatePlaylistForm';
+import { useDocumentTitle } from '../../lib/customHooks';
+import Layout from '../../components/Layout';
 import { Box, Divider, Grid, Text } from '@chakra-ui/react';
-import { Track as ITrack } from '../types/tracks';
+import { Track as ITrack } from '../../types/tracks';
 
 type TOnSuccessSearch = (searchTracks: ITrack[], query: string) => void;
 
@@ -78,6 +78,7 @@ const CreatePlaylist: React.FC = () => {
             <Grid
               templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
               gap={5}
+              data-testid="tracks-list"
             >
               {tracks.map((track) => (
                 <Track

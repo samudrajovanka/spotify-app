@@ -24,7 +24,6 @@ export const searchTrack: TSearchTrack = async (query, accessToken) => {
   const endPoint: string = `${config.SPOTIFY_BASE_URL}/search?type=track&q=${query}`;
   const response: AxiosResponse = await axios.get(endPoint, requestOptions);
 
-  console.log(response.data)
   return response.data;
 }
 

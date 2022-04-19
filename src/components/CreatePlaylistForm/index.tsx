@@ -125,6 +125,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
             onChange={handleChange}
             value={form.title}
             placeholder="Title of playlist"
+            data-testid="title-playlist"
           />
           {errorForm.title && (
             <FormErrorMessage>{errorForm.title}</FormErrorMessage>
@@ -139,6 +140,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
             value={form.description}
             name="description"
             onChange={handleChange}
+            data-testid="description-playlist"
           />
           {errorForm.description && (
             <FormErrorMessage>{errorForm.description}</FormErrorMessage>
@@ -146,7 +148,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
         </FormControl>
 
         <HStack justify="flex-end">
-          <Button type="submit">Create</Button>  
+          <Button type="submit" data-testid="btn-create-playlist">Create</Button>  
         </HStack>
       </Box>
     </VStack>
