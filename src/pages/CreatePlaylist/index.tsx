@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Track from '../../components/Track';
 import SearchBar from '../../components/SearchBar';
 import CreatePlaylistForm from '../../components/CreatePlaylistForm';
-import { useDocumentTitle } from '../../lib/customHooks';
 import Layout from '../../components/Layout';
 import { Box, Divider, Grid, Text } from '@chakra-ui/react';
 import { Track as ITrack } from '../../types/tracks';
+import { Helmet } from 'react-helmet-async';
 
 type TOnSuccessSearch = (searchTracks: ITrack[], query: string) => void;
 
@@ -15,7 +15,6 @@ const CreatePlaylist: React.FC = () => {
   const [selectedTracks, setSelectedTracks] = useState<ITrack[]>([]);
   const [isInSearch, setIsInSearch] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('No tracks');
-  useDocumentTitle('Create Playlist - Spotipy');
 
   useEffect(() => {
     if (!isInSearch) {
@@ -60,41 +59,47 @@ const CreatePlaylist: React.FC = () => {
   }
 
   return (
-    <Layout>
-      <Box as="main" className="container" my={5}>
-        <CreatePlaylistForm uriTracks={selectedTracksUri} />
+    <>
+      <Helmet>
+        <title>Create playlist - Spotipy</title>
+      </Helmet>
 
-        <Divider variant="dashed" my={10} />
+      <Layout>
+        <Box as="main" className="container" my={5}>
+          <CreatePlaylistForm uriTracks={selectedTracksUri} />
 
-        <SearchBar
-          onSuccess={onSuccessSearch}
-          onClearSearch={clearSearch}
-        />
+          <Divider variant="dashed" my={10} />
 
-        <Box mt={10}>
-          {(tracks.length === 0 ? ( 
-            <Text>{message}</Text>
-          ) : (
-            <Grid
-              templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-              gap={5}
-              data-testid="tracks-list"
-            >
-              {tracks.map((track) => (
-                <Track
-                  key={track.id}
-                  imageUrl={track.album.images[0].url}
-                  title={track.name}
-                  artist={track.artists[0].name}
-                  select={selectedTracksUri.includes(track.uri)}
-                  toggleSelect={() => toggleSelect(track)}
-                />
-              ))}
-            </Grid>
-          ))}
+          <SearchBar
+            onSuccess={onSuccessSearch}
+            onClearSearch={clearSearch}
+          />
+
+          <Box mt={10}>
+            {(tracks.length === 0 ? ( 
+              <Text>{message}</Text>
+            ) : (
+              <Grid
+                templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+                gap={5}
+                data-testid="tracks-list"
+              >
+                {tracks.map((track) => (
+                  <Track
+                    key={track.id}
+                    imageUrl={track.album.images[0].url}
+                    title={track.name}
+                    artist={track.artists[0].name}
+                    select={selectedTracksUri.includes(track.uri)}
+                    toggleSelect={() => toggleSelect(track)}
+                  />
+                ))}
+              </Grid>
+            ))}
+          </Box>
         </Box>
-      </Box>
-    </Layout>
+      </Layout>
+    </>
   );
 }
 

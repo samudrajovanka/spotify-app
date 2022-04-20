@@ -2,17 +2,16 @@ import React, { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import config from '../../lib/config';
-import { useDocumentTitle } from '../../lib/customHooks';
 import { getUserProfile } from '../../lib/fetchApi';
 import { login } from '../../slice/authSlice';
 import { Box, Button, Link, Text } from '@chakra-ui/react'
 import { User } from '../../types/user';
 import { useAppDispatch } from '../../store';
+import { Helmet } from "react-helmet-async";
 
 const Auth : React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  useDocumentTitle('Auth - Spotipy');
 
   const setLogin = useCallback(async (accessToken, expiresIn) => {
     try {
@@ -54,16 +53,21 @@ const Auth : React.FC = () => {
   }
 
   return (
-    <main>
-      <Box className="center" gap={2}>
-        <Text>Login for next step...</Text>
+    <>
+      <Helmet>
+        <title>Auth - Spotipy</title>
+      </Helmet>
+    
+      <main>
+        <Box className="center" gap={2}>
+          <Text>Login for next step...</Text>
 
-        <Link href={buildSpotifyLinkAuthorize()} _hover={{ textDecoration: 'none' }}>
-          <Button>Authorize</Button>
-        </Link>
-      </Box>
-      
-    </main>
+          <Link href={buildSpotifyLinkAuthorize()} _hover={{ textDecoration: 'none' }}>
+            <Button>Authorize</Button>
+          </Link>
+        </Box>
+      </main>
+    </>
   )
 }
 
