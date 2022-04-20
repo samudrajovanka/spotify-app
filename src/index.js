@@ -9,15 +9,23 @@ import store from './store';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './chakraTheme';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
+import config from './lib/config';
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <Provider store={store}>
-        <Router>
-          <App />
-        </Router>
-        <ToastContainer />
+        <HelmetProvider>
+          <Helmet>
+            <meta property="og:image" content={`${config.HOST}/logo512.png`} />
+          </Helmet>
+
+          <Router>
+            <App />
+          </Router>
+          <ToastContainer />
+        </HelmetProvider>
       </Provider>
     </ChakraProvider>
   </React.StrictMode>,
