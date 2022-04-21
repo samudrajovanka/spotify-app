@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const Seo: React.FC<IProps> = ({ title, suffixTitle }) => {
-  const titlePage = `${title}${suffixTitle && ' - Spotipy'}`;
+  const titlePage = `${title}${suffixTitle ? ' - Spotipy' : ''}`;
 
   return (
     <Helmet>
