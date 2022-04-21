@@ -17,9 +17,11 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store';
 import axios from 'axios';
 import { Playlist } from '../../types/playlist';
+import { FaPlus } from "react-icons/fa";
 
 interface IProps {
   uriTracks: string[];
+  onSuccess: () => void;
 }
 
 interface IForm {
@@ -29,9 +31,10 @@ interface IForm {
 
 type TValidateForm = () => boolean;
 
-const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
+const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks, onSuccess }) => {
   const accessToken: string = useAppSelector((state) => state.auth.accessToken);
   const userId: string | undefined = useAppSelector((state) => state.auth.user?.id);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const [form, setForm] = useState<IForm>({
@@ -53,22 +56,29 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
 
   const validateForm: TValidateForm = () => {
     let isValid: boolean = true;
+    
+    const error: { [key: string]: string } = {
+      title: '',
+      description: '',
+    }
 
     if (form.title.length < 10) {
-      setErrorForm({
-        ...errorForm,
-        title: 'Title must be at least 10 characters long',
-      });
+      error.title = 'Title must be at least 10 characters long';
       isValid = false;
     }
 
-    if (form.description.length > 100) {
-      setErrorForm({
-        ...errorForm,
-        description: 'Description must be less than 100 characters long',
-      });
+    if (form.description.length < 10) {
+      error.description = 'Description must be at least 10 characters long';
+      isValid = false;
+    } else if (form.description.length > 100) {
+      error.description = 'Description must be less than 100 characters long';
       isValid = false;
     }
+
+    setErrorForm({
+      ...errorForm,
+      ...error,
+    });
 
     return isValid;
   }
@@ -78,18 +88,23 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
 
     if (validateForm()) {
       if (uriTracks.length > 0) {
+        setIsLoading(true);
+
         try {
           const responseCreatePlaylist: Playlist = await createPlaylist(accessToken, userId, {
-            name: form.title,
-            description: form.description,
+            name: form.title.trim(),
+            description: form.description.trim(),
           });
 
           await addTracksToPlaylist(accessToken, responseCreatePlaylist.id, uriTracks);
 
+          setIsLoading(false);
           toast.success(' created successfully');
 
           setForm({ title: '', description: '' });
+          onSuccess();
         } catch (error) {
+          setIsLoading(false);
           if (axios.isAxiosError(error)) {
             if (error.response?.status === 401) {
               dispatch(logout());
@@ -112,6 +127,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
 
       <Box
         as="form"
+        noValidate
         onSubmit={handleSubmit}
         className="form"
         mt={6}
@@ -126,6 +142,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
             value={form.title}
             placeholder="Title of playlist"
             data-testid="title-playlist"
+            borderRadius="full"
           />
           {errorForm.title && (
             <FormErrorMessage>{errorForm.title}</FormErrorMessage>
@@ -141,6 +158,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
             name="description"
             onChange={handleChange}
             data-testid="description-playlist"
+            borderRadius="10px"
           />
           {errorForm.description && (
             <FormErrorMessage>{errorForm.description}</FormErrorMessage>
@@ -148,7 +166,16 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks }) => {
         </FormControl>
 
         <HStack justify="flex-end">
-          <Button type="submit" data-testid="btn-create-playlist">Create</Button>  
+          <Button
+            type="submit"
+            data-testid="btn-create-playlist"
+            isLoading={isLoading}
+            loadingText='Creating'
+            leftIcon={<FaPlus />}
+            isDisabled={form.title.length === 0 || form.description.length === 0}
+          >
+            Create
+          </Button>
         </HStack>
       </Box>
     </VStack>

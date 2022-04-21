@@ -1,4 +1,4 @@
-const getHost: () =>  string = () => {
+const getHost: () => string = () => {
   const protocol: string = window.location.protocol;
   const host: string = window.location.host;
 

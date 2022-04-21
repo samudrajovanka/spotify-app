@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AspectRatio,
   Box,
@@ -6,25 +6,37 @@ import {
   Heading,
   HStack,
   Image,
+  Link,
   Stack,
   Text,
   VStack
 } from '@chakra-ui/react';
+import { Track as ITrack } from '../../types/tracks';
+import formatDuration from '../../lib/formatDuration';
+import { useAppDispatch } from '../../store';
+import { addTrack, removeTrack } from '../../slice/tracksSlice';
 
 interface IProps {
-  imageUrl: string;
-  title: string;
-  artist: string;
+  track: ITrack;
   select: boolean;
-  toggleSelect: () => void;
 }
 
-const Track: React.FC<IProps> = ({ imageUrl, title, artist, select, toggleSelect }) => {
+const Track: React.FC<IProps> = ({ track, select }) => {
   const [isSelected, setIsSelected] = useState<boolean>(select);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setIsSelected(select);
+  }, [select]);
 
   const handleToggleSelect: () => void = () => {
-    setIsSelected(!isSelected);
-    toggleSelect();
+    if (isSelected) {
+      dispatch(removeTrack(track.uri));
+      setIsSelected(false);
+    } else {
+      dispatch(addTrack(track));
+      setIsSelected(true);
+    }
   }
 
   return (
@@ -46,9 +58,10 @@ const Track: React.FC<IProps> = ({ imageUrl, title, artist, select, toggleSelect
         borderRadius={{ sm: 10 }}
       >
         <Image
-          src={imageUrl}
-          alt={title}
+          src={track.album.images[0].url}
+          alt={track.name}
           transform="scale(1.1)"
+          objectFit="cover"
           _groupHover={{ transform: 'scale(1)' }}
           transition="transform .3s ease-in-out"
           data-testid="track-img" />
@@ -65,23 +78,38 @@ const Track: React.FC<IProps> = ({ imageUrl, title, artist, select, toggleSelect
           margin: 0
         }}
       >
-        <Box>
-          <Heading
-            as="h3"
-            size="sm"
-            isTruncated
-            data-testid="track-title"
-          >
-            {title}
-          </Heading>
-          <Text
-            fontSize="sm"
-            isTruncated
-            data-testid="track-artist"
-          >
-            {artist}
-          </Text>
-        </Box>
+        <Link
+          href={track.external_urls.spotify}
+          _hover={{ textDecoration: 'none' }}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Box>
+            <Heading
+              as="h3"
+              size="sm"
+              isTruncated
+              data-testid="track-title"
+            >
+              {track.name}
+            </Heading>
+            <Text
+              fontSize="sm"
+              isTruncated
+              data-testid="track-artist"
+            >
+              {track.artists[0].name}
+            </Text>
+            <Text
+              fontSize="sm"
+              data-testid="track-duration"
+              color="gray.500"
+              mt={1}
+            >
+              {formatDuration(track.duration_ms)}
+            </Text>
+          </Box>
+        </Link>
 
         <HStack justify="flex-end">
           <Button

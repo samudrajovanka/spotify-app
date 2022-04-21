@@ -1,18 +1,23 @@
-import { Box, Button, Text } from '@chakra-ui/react';
+import { Box, Button, Image } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import notFoundGif from '../../assets/gif/notFound.gif';
+import Seo from '../../components/Seo';
 
 const NotFound: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Not Found</title>
-      </Helmet>
+      <Seo
+        title="Not Found"
+      />
 
       <Box as="main" className="center" gap={2}>
-        <Text>No Content Here...</Text>
+        <Image
+          src={notFoundGif}
+          alt="not found gif"
+          boxSize="300px"
+        />
         <Link to="/create-playlist">
           <Button>
             Go to content

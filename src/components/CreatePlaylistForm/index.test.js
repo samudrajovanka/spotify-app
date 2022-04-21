@@ -35,7 +35,7 @@ describe('Form create playlist component should render', () => {
     expect(descriptionInput).toHaveValue('New Playlist Description');
   });
 
-  it('Show error title when title length is less then 10', () => {
+  it('Show error title when title length is less than 10', () => {
     const titleInput = screen.getByTestId('title-playlist');
     const descriptionInput = screen.getByTestId('description-playlist');
     const buttonCreate = screen.getByTestId('btn-create-playlist');

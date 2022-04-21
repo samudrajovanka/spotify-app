@@ -3,24 +3,31 @@ import Track from '../../components/Track';
 import SearchBar from '../../components/SearchBar';
 import CreatePlaylistForm from '../../components/CreatePlaylistForm';
 import Layout from '../../components/Layout';
-import { Box, Divider, Grid, Text } from '@chakra-ui/react';
+import { Box, Divider, Grid, Image, Text, VStack } from '@chakra-ui/react';
 import { Track as ITrack } from '../../types/tracks';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../../components/Seo';
+import musicImage from '../../assets/image/music.svg';
+import TrackSkeleton from '../../components/TrackSkeleton';
+import uid from '../../lib/uid';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { removeAllTracks } from '../../slice/tracksSlice';
 
 type TOnSuccessSearch = (searchTracks: ITrack[], query: string) => void;
 
 const CreatePlaylist: React.FC = () => {
   const [tracks, setTracks] = useState<ITrack[]>([]);
-  const [selectedTracksUri, setSelectedTracksUri] = useState<string[]>([]);
-  const [selectedTracks, setSelectedTracks] = useState<ITrack[]>([]);
+  const selectedTracks = useAppSelector((state) => state.tracks.itemsSelected);
+  const selectedTracksUri = useAppSelector((state) => state.tracks.itemsSelectedUri);
   const [isInSearch, setIsInSearch] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('No tracks');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!isInSearch) {
       setTracks(selectedTracks);
     }
-  }, [selectedTracksUri, selectedTracks, isInSearch]);
+  }, [selectedTracks, isInSearch]);
 
   const onSuccessSearch: TOnSuccessSearch = (searchTracks, query) => {
     setIsInSearch(true);
@@ -46,39 +53,61 @@ const CreatePlaylist: React.FC = () => {
     setIsInSearch(false);
   }
 
-  const toggleSelect: (track: ITrack) => void = (track) => {
-    const uri: string = track.uri;
+  const onSuccessCreatePlaylist: () => void = () => {
+    dispatch(removeAllTracks());
 
-    if (selectedTracksUri.includes(uri)) {
-      setSelectedTracksUri(selectedTracksUri.filter((item: string) => item !== uri));
-      setSelectedTracks(selectedTracks.filter((item: ITrack) => item.uri !== uri));
-    } else {
-      setSelectedTracksUri([...selectedTracksUri, uri]);
-      setSelectedTracks([...selectedTracks, track]);
+    if (!isInSearch && tracks.length !== 0) {
+      setTracks([]);
     }
+  }
+
+  const onLoading: (isLoading: boolean) => void = (isLoading) => {
+    setIsLoading(isLoading);
   }
 
   return (
     <>
-      <Helmet>
-        <title>Create playlist - Spotipy</title>
-      </Helmet>
+      <Seo
+        title="Create Playlist"
+        suffixTitle
+      />
 
       <Layout>
         <Box as="main" className="container" my={5}>
-          <CreatePlaylistForm uriTracks={selectedTracksUri} />
+          <CreatePlaylistForm
+            uriTracks={selectedTracksUri}
+            onSuccess={onSuccessCreatePlaylist}
+          />
 
           <Divider variant="dashed" my={10} />
 
           <SearchBar
             onSuccess={onSuccessSearch}
             onClearSearch={clearSearch}
+            onLoading={onLoading}
           />
 
           <Box mt={10}>
-            {(tracks.length === 0 ? ( 
-              <Text>{message}</Text>
-            ) : (
+            {(!isLoading && tracks.length === 0) && (
+              <VStack>
+                <Image src={musicImage} alt="no music" boxSize="200px" />
+                <Text>{message}</Text>
+              </VStack>
+            )}
+
+            {isLoading && (
+              <Grid
+                templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+                gap={5}
+                data-testid="tracks-list"
+              >
+                {Array.from({ length: 4 }, () => (
+                  <TrackSkeleton key={uid()}/>
+                ))}
+              </Grid>
+            )}
+
+            {!isLoading && tracks.length !== 0 && (
               <Grid
                 templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
                 gap={5}
@@ -87,15 +116,12 @@ const CreatePlaylist: React.FC = () => {
                 {tracks.map((track) => (
                   <Track
                     key={track.id}
-                    imageUrl={track.album.images[0].url}
-                    title={track.name}
-                    artist={track.artists[0].name}
+                    track={track}
                     select={selectedTracksUri.includes(track.uri)}
-                    toggleSelect={() => toggleSelect(track)}
                   />
                 ))}
               </Grid>
-            ))}
+            )}
           </Box>
         </Box>
       </Layout>

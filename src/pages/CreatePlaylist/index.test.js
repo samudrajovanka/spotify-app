@@ -6,10 +6,18 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import config from '../../lib/config';
+import { HelmetProvider } from 'react-helmet-async';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 const setup = () => render(
   <Provider store={store}>
-    <CreatePlaylist />
+    <HelmetProvider>
+      <Router>
+        <Switch>
+          <CreatePlaylist />
+        </Switch>
+      </Router>
+    </HelmetProvider>
   </Provider>
 );
 
@@ -36,6 +44,10 @@ const server = setupServer(
               },
             ],
             uri: 'test uri',
+            duration_ms: 1000,
+            external_urls: {
+              spotify: 'test spotify url',
+            },
           }
         ],
       }
@@ -78,12 +90,14 @@ describe('Create playlist page should render', () => {
 
     const imgTrack = screen.getByTestId('track-img');
     const titleTrack = screen.getByTestId('track-title');
+    const durationTrack = screen.getByTestId('track-duration');
     const artistTrack = screen.getByTestId('track-artist');
     const btnTrack = screen.getByTestId('track-btn-select');
 
-    expect(imgTrack).toBeInTheDocument();
-    expect(titleTrack).toBeInTheDocument();
-    expect(artistTrack).toBeInTheDocument();
+    expect(imgTrack).toHaveAttribute('src', 'test image url');
+    expect(titleTrack).toHaveTextContent('test title');
+    expect(durationTrack).toHaveTextContent('00:01');
+    expect(artistTrack).toHaveTextContent('test artist');
     expect(btnTrack).toBeInTheDocument();
   });
 });

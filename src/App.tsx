@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import { login, logout } from './slice/authSlice';
 import { useAppDispatch, useAppSelector } from './store';
 import { User } from './types/user';
+import Profile from './pages/Profile';
 
 const App: React.FC = () => {
   const { pathname }: { pathname: string } = useLocation();
@@ -39,6 +40,9 @@ const App: React.FC = () => {
       </GuardRoute>
       <GuardRoute path="/" type="guest" exact>
         <Auth />
+      </GuardRoute>
+      <GuardRoute path="/profile" type="private" exact>
+        <Profile />
       </GuardRoute>
       <Route path="*">
         <NotFound />

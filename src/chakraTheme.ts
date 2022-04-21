@@ -17,7 +17,14 @@ const theme = extendTheme({
         solid: {
           bg: 'primary.500',
           color: 'white',
+          px: 6,
+          _disabled: {
+            opacity: '0.5',
+          },
           _hover: {
+            _disabled: {
+              bg: 'primary.400',
+            },
             bg: 'primary.400',
           },
           _focus: {
@@ -28,6 +35,7 @@ const theme = extendTheme({
         outline: {
           borderColor: 'primary.500',
           color: 'primary.500',
+          px: 6,
           _focus: {
             ring: 2,
             ringColor: 'primary.500',
