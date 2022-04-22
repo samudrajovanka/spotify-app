@@ -1,4 +1,6 @@
+import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import Footer from '../Footer';
 import Navbar from '../Navbar';
 
 interface IProps {
@@ -7,12 +9,16 @@ interface IProps {
 
 const Layout: React.FC<IProps> = ({ children }) => {
   return (
-    <div>
+    <Flex direction="column" minH="100vh">
       <Navbar />
 
-      {children}
-    </div>
-  )
-}
+      <Box flex="1 1 100%">
+        {children}
+      </Box>
+
+      <Footer />
+    </Flex>
+  );
+};
 
 export default Layout;

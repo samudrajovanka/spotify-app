@@ -11,7 +11,7 @@ const setup = () => render(
 );
 
 describe('Search bar component should render', () => {
-  beforeEach(setup)
+  beforeEach(setup);
   afterEach(cleanup);
 
   it('Success rendered', () => {

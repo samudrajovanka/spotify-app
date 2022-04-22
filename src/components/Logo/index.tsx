@@ -6,7 +6,7 @@ const Logo: React.FC = () => {
     <Box>
       <Text fontWeight="bold" color="white">Spotipy.</Text>
     </Box>
-  )
-}
+  );
+};
 
 export default Logo;

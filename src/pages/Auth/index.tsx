@@ -4,10 +4,11 @@ import { toast } from 'react-toastify';
 import config from '../../lib/config';
 import { getUserProfile } from '../../lib/fetchApi';
 import { login } from '../../slice/authSlice';
-import { Box, Button, Link, Text } from '@chakra-ui/react'
+import { Box, Button, Link, Text } from '@chakra-ui/react';
 import { User } from '../../types/user';
 import { useAppDispatch } from '../../store';
-import { Helmet } from "react-helmet-async";
+import { FiLogIn } from 'react-icons/fi';
+import Seo from '../../components/Seo';
 
 const Auth : React.FC = () => {
   const dispatch = useAppDispatch();
@@ -50,25 +51,26 @@ const Auth : React.FC = () => {
       `&redirect_uri=${config.HOST}` +
       `&state=${state}` +
       `&scope=${config.SPOTIFY_SCOPE}`;
-  }
+  };
 
   return (
     <>
-      <Helmet>
-        <title>Auth - Spotipy</title>
-      </Helmet>
-    
+      <Seo
+        title="Auth"
+        suffixTitle
+      />
+
       <main>
         <Box className="center" gap={2}>
           <Text>Login for next step...</Text>
 
           <Link href={buildSpotifyLinkAuthorize()} _hover={{ textDecoration: 'none' }}>
-            <Button>Authorize</Button>
+            <Button rightIcon={<FiLogIn />}>Authorize</Button>
           </Link>
         </Box>
       </main>
     </>
-  )
-}
+  );
+};
 
 export default Auth;

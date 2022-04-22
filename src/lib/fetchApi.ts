@@ -1,9 +1,9 @@
-import axios, { AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { Playlist } from '../types/playlist';
 import { Snapshot } from '../types/snapshot';
 import { ResponseTracks } from '../types/tracks';
 import { User } from '../types/user';
-import config from "./config";
+import config from './config';
 
 type TBuildHeaders = (accessToken: string) => AxiosRequestHeaders;
 
@@ -11,8 +11,8 @@ const buildHeaders: TBuildHeaders = (accessToken) => {
   return {
     Authorization: 'Bearer ' + accessToken,
     'Content-Type': 'application/json',
-  }
-}
+  };
+};
 
 type TSearchTrack = (query: string, accessToken: string) => Promise<ResponseTracks>;
 
@@ -25,7 +25,7 @@ export const searchTrack: TSearchTrack = async (query, accessToken) => {
   const response: AxiosResponse = await axios.get(endPoint, requestOptions);
 
   return response.data;
-}
+};
 
 type TGetUserProfile = (accessToken: string) => Promise<User>;
 
@@ -38,7 +38,7 @@ export const getUserProfile: TGetUserProfile = async (accessToken) => {
   const response: AxiosResponse = await axios.get(endPoint, requestOptions);
 
   return response.data;
-}
+};
 
 interface IPlaylist {
   name: string;
@@ -67,7 +67,7 @@ export const createPlaylist: TCreatePlaylist = async (accessToken, userId, playl
   const response: AxiosResponse = await axios.post(endPoint, data, requestOptions);
 
   return response.data;
-}
+};
 
 type TAddTrackToPlaylist = (
   accessToken: string,
@@ -88,4 +88,4 @@ export const addTracksToPlaylist: TAddTrackToPlaylist = async (accessToken, play
   const response: AxiosResponse = await axios.post(endPoint, data, requestOptions);
 
   return response.data;
-}
+};

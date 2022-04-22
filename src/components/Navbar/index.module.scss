@@ -1,0 +1,23 @@
+.nav-link {
+  color: #FFFFFF;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    width: 100%;
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &:hover {
+    &::after {
+      transform: scale(1);
+    }
+  }
+}

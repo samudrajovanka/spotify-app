@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import { login, logout } from './slice/authSlice';
 import { useAppDispatch, useAppSelector } from './store';
 import { User } from './types/user';
+import Profile from './pages/Profile';
 
 const App: React.FC = () => {
   const { pathname }: { pathname: string } = useLocation();
@@ -22,7 +23,7 @@ const App: React.FC = () => {
       if (+(expiredDate as string) < +new Date()) {
         dispatch((logout()));
       } else if (!accessTokenState) {
-        const user: User | string = JSON.parse(localStorage.getItem('user') || "");
+        const user: User | string = JSON.parse(localStorage.getItem('user') || '');
         dispatch(login({
           accessToken,
           user,
@@ -40,11 +41,14 @@ const App: React.FC = () => {
       <GuardRoute path="/" type="guest" exact>
         <Auth />
       </GuardRoute>
+      <GuardRoute path="/profile" type="private" exact>
+        <Profile />
+      </GuardRoute>
       <Route path="*">
         <NotFound />
       </Route>
     </Switch>
   );
-}
+};
 
 export default App;
