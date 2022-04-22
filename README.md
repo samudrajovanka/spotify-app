@@ -1,14 +1,24 @@
 # Spotipy
 
-> Spotipy is a spotify clone where you can create a playlist with the songs you have selected.
+> Spotipy is a place where you can connect with your spotify to create playlists.
 
-<!-- disin gambar screenshoot -->
+![homepage](./docs/image/homepage.jpeg)
+![homepage search](./docs/image/homepage-search.jpeg)
 
 ## Features
 
 - 🎵 Search music
 - 🎶 Create playlist
-- 🌝 See user profile
+- 😎 See user profile
+- 🌙 Dark mode
+
+## Powered by
+
+- [Create React App](https://create-react-app.dev/) to initialize the project.
+- [React Redux](https://react-redux.js.org/) to manage the app state.
+- [Chakra-ui](https://chakra-ui.com/docs/getting-started) + [Framer Motion](https://www.framer.com/motion/) to build the user interface.
+- [Jest](https://jestjs.io/) & [react testing-library](https://testing-library.com/) to test the UI and implementation. 🧪
+- Hosted on [Vercel 🚀](https://vercel.com/).
 
 ## How to run on local
 
@@ -43,6 +53,8 @@
     ```bash
     npm start
     ```
+
+- Open <http://localhost:3000> with your browser to see the result.
 
 ## Author
 
