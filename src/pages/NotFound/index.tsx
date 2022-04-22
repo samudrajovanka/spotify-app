@@ -1,10 +1,13 @@
-import { Box, Button, Image } from '@chakra-ui/react';
+import { Box, Button, useColorMode } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import notFoundGif from '../../assets/gif/notFound.gif';
 import Seo from '../../components/Seo';
+import Lottie from 'react-lottie-player'
+import notFoundGif from '../../assets/lottie/not-found.json';
+import notFoundDarkGif from '../../assets/lottie/not-found-dark.json';
 
 const NotFound: React.FC = () => {
+  const { colorMode } = useColorMode();
 
   return (
     <>
@@ -13,11 +16,13 @@ const NotFound: React.FC = () => {
       />
 
       <Box as="main" className="center" gap={2}>
-        <Image
-          src={notFoundGif}
-          alt="not found gif"
-          boxSize="300px"
-        />
+        <Box boxSize="300px">
+          <Lottie
+            animationData={colorMode === 'light' ? notFoundGif : notFoundDarkGif}
+            loop
+            play
+          />
+        </Box>
         <Link to="/create-playlist">
           <Button>
             Go to content

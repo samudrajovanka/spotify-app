@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import store from './store';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import theme from './chakraTheme';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import config from './lib/config';
@@ -22,6 +22,7 @@ ReactDOM.render(
           </Helmet>
 
           <Router>
+            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
             <App />
           </Router>
           <ToastContainer />

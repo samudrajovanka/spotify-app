@@ -8,11 +8,13 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem
+  MenuItem,
+  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { FiLogOut } from 'react-icons/fi';
-import { FaChevronDown, FaRegUserCircle } from 'react-icons/fa';
+import { FaChevronDown, FaRegUserCircle, FaMoon, FaRegSun } from 'react-icons/fa';
 import { User } from '../../types/user';
 import { Link } from 'react-router-dom';
 import styles from './index.module.scss';
@@ -20,9 +22,11 @@ import styles from './index.module.scss';
 const Navbar: React.FC = () => {
   const user: User | null = useAppSelector(state => state.auth.user);
   const dispatch = useAppDispatch();
+  const { colorMode, toggleColorMode } = useColorMode();
+  const bgNavbar = useColorModeValue('primary.500', 'gray.700');
 
   return (
-    <Box as="nav" bg="primary.500" py={3} pos="sticky" zIndex={9999} top={0}>
+    <Box as="nav" bg={bgNavbar} py={3} pos="sticky" zIndex={9999} top={0}>
       <HStack justify="space-between" className="container">
         <Link to="/create-playlist">
           <Logo />
@@ -52,6 +56,12 @@ const Navbar: React.FC = () => {
                     Profile
                   </MenuItem>
                 </Link>
+                <MenuItem
+                  icon={colorMode === 'light' ? <FaMoon /> : <FaRegSun />}
+                  onClick={toggleColorMode}
+                >
+                  {colorMode === 'light' ? 'Dark' : 'Light'} Mode
+                </MenuItem>
                 <MenuItem
                   icon={<FiLogOut />}
                   onClick={() => dispatch(logout())}
