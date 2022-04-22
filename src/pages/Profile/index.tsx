@@ -38,7 +38,7 @@ const Profile = () => {
         </Box>
       </Layout>
     </>
-  )
-}
+  );
+};
 
 export default Profile;

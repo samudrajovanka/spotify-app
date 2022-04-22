@@ -2,7 +2,7 @@ import { Box, Button, useColorMode } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Seo from '../../components/Seo';
-import Lottie from 'react-lottie-player'
+import Lottie from 'react-lottie-player';
 import notFoundGif from '../../assets/lottie/not-found.json';
 import notFoundDarkGif from '../../assets/lottie/not-found-dark.json';
 
@@ -30,7 +30,7 @@ const NotFound: React.FC = () => {
         </Link>
       </Box>
     </>
-  )
-}
+  );
+};
 
 export default NotFound;

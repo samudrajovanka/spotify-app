@@ -52,7 +52,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks, onSuccess }) => {
 
     setForm({ ...form, [name]: value });
     setErrorForm({ ...errorForm, [name]: '' });
-  }
+  };
 
   const validateForm: TValidateForm = () => {
     let isValid: boolean = true;
@@ -60,7 +60,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks, onSuccess }) => {
     const error: { [key: string]: string } = {
       title: '',
       description: '',
-    }
+    };
 
     if (form.title.length < 10) {
       error.title = 'Title must be at least 10 characters long';
@@ -81,7 +81,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks, onSuccess }) => {
     });
 
     return isValid;
-  }
+  };
 
   const handleSubmit: FormEventHandler<HTMLDivElement> & FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -117,7 +117,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks, onSuccess }) => {
         toast.error('Please select at least one track');
       }
     }
-  }
+  };
 
   return (
     <VStack justify="center">
@@ -179,7 +179,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks, onSuccess }) => {
         </HStack>
       </Box>
     </VStack>
-  )
-}
+  );
+};
 
 export default CreatePlaylistForm;

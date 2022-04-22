@@ -18,7 +18,7 @@ const Layout: React.FC<IProps> = ({ children }) => {
 
       <Footer />
     </Flex>
-  )
-}
+  );
+};
 
 export default Layout;

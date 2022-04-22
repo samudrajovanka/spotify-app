@@ -22,7 +22,7 @@ const SearchBar: React.FC<IProps> = ({ onSuccess, onClearSearch, onLoading }) =>
 
   const handleInput: ChangeEventHandler<HTMLInputElement> = (e) => {
     setText(e.target.value);
-  }
+  };
 
   const handleSubmit: FormEventHandler<HTMLDivElement> & FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -46,13 +46,13 @@ const SearchBar: React.FC<IProps> = ({ onSuccess, onClearSearch, onLoading }) =>
         toast.error(error.message);
       }
     }
-  }
+  };
 
   const handleClear: () => void = () => {
     onClearSearch();
     setText('');
     setIsClear(true);
-  }
+  };
 
   return (
     <Flex
@@ -92,7 +92,7 @@ const SearchBar: React.FC<IProps> = ({ onSuccess, onClearSearch, onLoading }) =>
         Search
       </Button>
     </Flex>
-  )
-}
+  );
+};
 
 export default SearchBar;

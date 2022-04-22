@@ -132,7 +132,7 @@ const Navbar: React.FC = () => {
         </HStack>
       </HStack>
     </Box>
-  )
-}
+  );
+};
 
 export default Navbar;

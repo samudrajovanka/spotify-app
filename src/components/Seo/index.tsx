@@ -14,7 +14,7 @@ const Seo: React.FC<IProps> = ({ title, suffixTitle }) => {
       <title>{titlePage}</title>
       <meta property="og:title" content={titlePage} />
     </Helmet>
-  )
-}
+  );
+};
 
 export default Seo;

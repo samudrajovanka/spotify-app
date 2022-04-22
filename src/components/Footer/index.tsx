@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
         &copy; 2022 Jovanka Samudra - All rights reserved
       </Text>
     </Box>
-  )
-}
+  );
+};
 
 export default Footer;

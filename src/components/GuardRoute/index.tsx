@@ -15,14 +15,14 @@ const GuardRoute: React.FC<IProps & any> = ({ children, type, ...props }) =>{
       <Route {...props}>
         {!isAuthorized ? children : <Redirect to="/create-playlist" />}
       </Route>
-    )
+    );
   }
 
   return (
     <Route {...props}>
       {isAuthorized ? children : <Redirect to="/" />}
     </Route>
-  )
-}
+  );
+};
 
 export default GuardRoute;

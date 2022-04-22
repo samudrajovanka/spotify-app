@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import config from '../../lib/config';
 import { getUserProfile } from '../../lib/fetchApi';
 import { login } from '../../slice/authSlice';
-import { Box, Button, Link, Text } from '@chakra-ui/react'
+import { Box, Button, Link, Text } from '@chakra-ui/react';
 import { User } from '../../types/user';
 import { useAppDispatch } from '../../store';
 import { FiLogIn } from 'react-icons/fi';
@@ -51,7 +51,7 @@ const Auth : React.FC = () => {
       `&redirect_uri=${config.HOST}` +
       `&state=${state}` +
       `&scope=${config.SPOTIFY_SCOPE}`;
-  }
+  };
 
   return (
     <>
@@ -70,7 +70,7 @@ const Auth : React.FC = () => {
         </Box>
       </main>
     </>
-  )
-}
+  );
+};
 
 export default Auth;

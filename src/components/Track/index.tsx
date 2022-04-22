@@ -37,7 +37,7 @@ const Track: React.FC<IProps> = ({ track, select }) => {
       dispatch(addTrack(track));
       setIsSelected(true);
     }
-  }
+  };
 
   return (
     <Stack
@@ -123,6 +123,6 @@ const Track: React.FC<IProps> = ({ track, select }) => {
       </VStack>
     </Stack>
   );
-}
+};
 
 export default Track;

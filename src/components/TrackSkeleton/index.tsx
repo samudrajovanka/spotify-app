@@ -37,7 +37,7 @@ const TrackSkeleton = () => {
         <SkeletonText noOfLines={3} spacing='4' />
       </VStack>
     </Stack>
-  )
-}
+  );
+};
 
 export default TrackSkeleton;

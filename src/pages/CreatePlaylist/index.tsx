@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import Track from '../../components/Track';
 import SearchBar from '../../components/SearchBar';
 import CreatePlaylistForm from '../../components/CreatePlaylistForm';
@@ -45,13 +45,13 @@ const CreatePlaylist: React.FC = () => {
 
       return _tracks;
     });
-  }
+  };
 
   const clearSearch: () => void = () => {
     setTracks(selectedTracks);
     setMessage('No tracks');
     setIsInSearch(false);
-  }
+  };
 
   const onSuccessCreatePlaylist: () => void = () => {
     dispatch(removeAllTracks());
@@ -59,11 +59,11 @@ const CreatePlaylist: React.FC = () => {
     if (!isInSearch && tracks.length !== 0) {
       setTracks([]);
     }
-  }
+  };
 
   const onLoading: (isLoading: boolean) => void = (isLoading) => {
     setIsLoading(isLoading);
-  }
+  };
 
   return (
     <>
@@ -127,6 +127,6 @@ const CreatePlaylist: React.FC = () => {
       </Layout>
     </>
   );
-}
+};
 
 export default CreatePlaylist;

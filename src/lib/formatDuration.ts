@@ -1,6 +1,6 @@
 const pad: (num: number) => string = (num) => {
     return `${num}`.padStart(2, '0');
-}
+};
 
 const formatDuration: (milliseconds: number) => string = (milliseconds) => {
   
@@ -18,6 +18,6 @@ const formatDuration: (milliseconds: number) => string = (milliseconds) => {
   return hours
     ? `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
     : `${pad(minutes)}:${pad(seconds)}`;
-}
+};
 
 export default formatDuration;
