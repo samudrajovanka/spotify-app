@@ -4,8 +4,7 @@ import Layout from '../../components/Layout';
 import Seo from '../../components/Seo';
 import { useAppSelector } from '../../store';
 import { User } from '../../types/user';
-import { FaExternalLinkAlt } from "react-icons/fa";
-
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 const Profile = () => {
   const user: User | null = useAppSelector((state) => state.auth.user);

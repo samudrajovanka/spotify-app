@@ -7,7 +7,7 @@ import { login } from '../../slice/authSlice';
 import { Box, Button, Link, Text } from '@chakra-ui/react'
 import { User } from '../../types/user';
 import { useAppDispatch } from '../../store';
-import { FiLogIn } from "react-icons/fi";
+import { FiLogIn } from 'react-icons/fi';
 import Seo from '../../components/Seo';
 
 const Auth : React.FC = () => {

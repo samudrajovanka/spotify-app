@@ -23,7 +23,7 @@ const App: React.FC = () => {
       if (+(expiredDate as string) < +new Date()) {
         dispatch((logout()));
       } else if (!accessTokenState) {
-        const user: User | string = JSON.parse(localStorage.getItem('user') || "");
+        const user: User | string = JSON.parse(localStorage.getItem('user') || '');
         dispatch(login({
           accessToken,
           user,

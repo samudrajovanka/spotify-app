@@ -17,7 +17,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store';
 import axios from 'axios';
 import { Playlist } from '../../types/playlist';
-import { FaPlus } from "react-icons/fa";
+import { FaPlus } from 'react-icons/fa';
 
 interface IProps {
   uriTracks: string[];
@@ -170,7 +170,7 @@ const CreatePlaylistForm: React.FC<IProps> = ({ uriTracks, onSuccess }) => {
             type="submit"
             data-testid="btn-create-playlist"
             isLoading={isLoading}
-            loadingText='Creating'
+            loadingText="Creating"
             leftIcon={<FaPlus />}
             isDisabled={form.title.length === 0 || form.description.length === 0}
           >

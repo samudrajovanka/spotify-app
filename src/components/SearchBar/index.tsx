@@ -60,7 +60,7 @@ const SearchBar: React.FC<IProps> = ({ onSuccess, onClearSearch, onLoading }) =>
       noValidate
       gap={3}
       onSubmit={handleSubmit}
-      direction={{ base:"column", sm:'row' }}
+      direction={{ base:'column', sm:'row' }}
     >
       <VStack flex="1 1 100%">
         <Input

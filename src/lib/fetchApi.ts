@@ -1,9 +1,9 @@
-import axios, { AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { Playlist } from '../types/playlist';
 import { Snapshot } from '../types/snapshot';
 import { ResponseTracks } from '../types/tracks';
 import { User } from '../types/user';
-import config from "./config";
+import config from './config';
 
 type TBuildHeaders = (accessToken: string) => AxiosRequestHeaders;
 
