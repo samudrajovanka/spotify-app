@@ -32,6 +32,9 @@ const theme = extendTheme({
           _focus: {
             ring: 2,
             ringColor: 'primary.500',
+          },
+          _active: {
+            bg: 'primary.500',
           }
         },
         outline: {
